@@ -1,10 +1,11 @@
 #!/bin/zsh
 # Rust streak daily commit helper
+# Calculates streak day from fixed start date: 2025-09-01
 
-# Count commits to set streak day
-DAY=$(($(git rev-list --count HEAD) + 1))
+START_DATE="2025-09-01"
+TODAY=$(date +%Y-%m-%d)
+DAY=$(( ( $(date -j -f "%Y-%m-%d" "$TODAY" +%s) - $(date -j -f "%Y-%m-%d" "$START_DATE" +%s) ) / 86400 + 1 ))
 
-# Allow you to add a short description
 if [ $# -eq 0 ]; then
   MSG="progress"
 else
